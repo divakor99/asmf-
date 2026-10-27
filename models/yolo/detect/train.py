@@ -10,7 +10,6 @@ from typing import Any
 import numpy as np
 import torch
 from torch import nn
-
 from ultralytics.data import build_dataloader, build_yolo_dataset
 from ultralytics.engine.trainer import BaseTrainer
 from ultralytics.models import yolo

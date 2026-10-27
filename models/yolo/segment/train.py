@@ -5,7 +5,6 @@ from __future__ import annotations
 from copy import copy
 
 import torch
-
 from ultralytics.models import yolo
 from ultralytics.nn.tasks import SegmentationModel
 from ultralytics.utils import DEFAULT_CFG, RANK

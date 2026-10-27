@@ -7,7 +7,6 @@ from pathlib import Path
 from typing import Any
 
 import torch
-
 from ultralytics.models import yolo
 from ultralytics.nn.tasks import PoseModel
 from ultralytics.utils import DEFAULT_CFG, RANK

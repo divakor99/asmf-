@@ -90,7 +90,6 @@ These cropping-based transforms assume square inputs and can crop out important 
 import numpy as np
 import torch
 import torchvision.transforms as T
-
 from ultralytics import YOLO
 from ultralytics.data.augment import ClassifyLetterBox
 from ultralytics.data.dataset import ClassificationDataset

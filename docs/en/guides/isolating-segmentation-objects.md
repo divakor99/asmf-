@@ -160,7 +160,6 @@ from pathlib import Path
 
 import cv2
 import numpy as np
-
 from ultralytics import YOLO
 
 model = YOLO("yolo26n-seg.pt")
@@ -205,7 +204,6 @@ Load a segmentation model, run inference, build a binary mask from each detectio
 ```python
 import cv2
 import numpy as np
-
 from ultralytics import YOLO
 
 model = YOLO("yolo26n-seg.pt")

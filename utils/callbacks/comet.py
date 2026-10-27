@@ -8,7 +8,6 @@ from typing import Any
 
 import cv2
 import numpy as np
-
 from ultralytics.utils import LOGGER, RANK, TESTS_RUNNING, env_bool, ops
 from ultralytics.utils.metrics import ClassifyMetrics, DetMetrics, OBBMetrics, PoseMetrics, SegmentMetrics
 

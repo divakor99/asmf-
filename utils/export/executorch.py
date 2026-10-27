@@ -6,7 +6,6 @@ from functools import partial
 from pathlib import Path
 
 import torch
-
 from ultralytics.nn.modules import Pose, Pose26
 from ultralytics.utils import LOGGER, YAML
 from ultralytics.utils.checks import check_executorch_requirements

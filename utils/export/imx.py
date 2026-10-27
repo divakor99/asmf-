@@ -11,7 +11,6 @@ from shutil import which
 
 import numpy as np
 import torch
-
 from ultralytics.nn.modules import Detect, Pose, Segment
 from ultralytics.utils import IS_DEBIAN_BOOKWORM, IS_DEBIAN_TRIXIE, IS_RASPBERRYPI, IS_UBUNTU, LOGGER, WINDOWS
 from ultralytics.utils.checks import check_apt_requirements, check_requirements

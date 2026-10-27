@@ -8,7 +8,6 @@ from pathlib import Path
 
 import numpy as np
 import torch
-
 from ultralytics.utils import LOGGER
 
 from .base import BaseBackend

@@ -6,7 +6,6 @@ from copy import copy, deepcopy
 from pathlib import Path
 
 import torch
-
 from ultralytics.data import YOLOConcatDataset, build_yolo_dataset
 from ultralytics.data.augment import LoadVisualPrompt
 from ultralytics.engine.trainer import BaseTrainer

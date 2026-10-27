@@ -9,7 +9,6 @@
 from functools import partial
 
 import torch
-
 from ultralytics.utils.downloads import attempt_download_asset
 from ultralytics.utils.patches import torch_load
 

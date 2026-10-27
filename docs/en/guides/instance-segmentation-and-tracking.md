@@ -60,7 +60,6 @@ The `InstanceSegmentation` solution runs a YOLO26 segmentation model on each fra
 
         ```python
         import cv2
-
         from ultralytics import solutions
 
         cap = cv2.VideoCapture("path/to/video.mp4")
@@ -140,7 +139,6 @@ To perform instance segmentation using Ultralytics YOLO26, initialize the YOLO m
 
 ```python
 import cv2
-
 from ultralytics import solutions
 
 cap = cv2.VideoCapture("path/to/video.mp4")

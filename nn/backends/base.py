@@ -10,7 +10,6 @@ from pathlib import Path
 from typing import Any
 
 import torch
-
 from ultralytics.utils import YAML
 
 

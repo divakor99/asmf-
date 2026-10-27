@@ -8,7 +8,6 @@ from pathlib import Path
 
 import numpy as np
 import torch
-
 from ultralytics.nn.modules import Detect, Pose, Pose26
 from ultralytics.utils import ARM64, AUTOINSTALL, LINUX, LOGGER, MACOS, USER_CONFIG_DIR
 from ultralytics.utils.checks import IS_PYTHON_MINIMUM_3_13, check_requirements, check_version

@@ -6,7 +6,6 @@ import asyncio
 from pathlib import Path
 
 import torch
-
 from ultralytics.utils import LOGGER
 from ultralytics.utils.checks import check_requirements
 

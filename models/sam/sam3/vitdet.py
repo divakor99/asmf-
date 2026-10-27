@@ -22,7 +22,6 @@ import torch
 import torch.nn.functional as F
 from torch import Tensor, nn
 from torch.utils import checkpoint
-
 from ultralytics.models.sam.modules.blocks import PatchEmbed
 from ultralytics.models.sam.modules.utils import (
     apply_rotary_enc,

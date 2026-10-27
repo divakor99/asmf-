@@ -10,7 +10,6 @@ from typing import Any
 import numpy as np
 import torch
 from torch import nn
-
 from ultralytics.utils import LINUX, LOGGER, WINDOWS
 from ultralytics.utils.checks import check_suffix
 from ultralytics.utils.downloads import is_url

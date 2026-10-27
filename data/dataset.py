@@ -15,7 +15,6 @@ import numpy as np
 import torch
 from PIL import Image
 from torch.utils.data import ConcatDataset
-
 from ultralytics.nn.autobackend import check_class_names
 from ultralytics.utils import LOCAL_RANK, LOGGER, NUM_THREADS, TQDM, IterableSimpleNamespace, colorstr
 from ultralytics.utils.instance import Instances

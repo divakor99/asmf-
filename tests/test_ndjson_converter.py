@@ -9,7 +9,6 @@ from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 import cv2
 import numpy as np
 import pytest
-
 from ultralytics.data.converter import convert_ndjson_to_yolo
 from ultralytics.data.utils import load_depth, save_depth_png
 from ultralytics.utils import YAML

@@ -4,7 +4,6 @@ import sys
 import time
 
 import torch
-
 from ultralytics.utils import LOGGER
 from ultralytics.utils.metrics import batch_probiou, box_iou
 from ultralytics.utils.ops import xywh2xyxy

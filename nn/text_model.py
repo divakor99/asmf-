@@ -8,7 +8,6 @@ from pathlib import Path
 import torch
 from PIL import Image
 from torch import nn
-
 from ultralytics.utils import WEIGHTS_DIR, checks
 from ultralytics.utils.torch_utils import smart_inference_mode
 

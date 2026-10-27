@@ -22,7 +22,6 @@ from typing import Any
 import numpy as np
 import torch
 import torch.nn.functional as F
-
 from ultralytics.utils import LOGGER
 from ultralytics.utils.torch_utils import smart_inference_mode
 

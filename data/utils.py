@@ -15,7 +15,6 @@ from uuid import uuid4
 import cv2
 import numpy as np
 from PIL import Image, ImageOps
-
 from ultralytics.nn.autobackend import check_class_names
 from ultralytics.utils import (
     ASSETS_URL,
@@ -535,7 +534,6 @@ def visualize_image_annotations(image_path: str, txt_path: str, label_map: dict[
         >>> visualize_image_annotations("path/to/image.jpg", "path/to/annotations.txt", label_map)
     """
     import matplotlib.pyplot as plt
-
     from ultralytics.utils.plotting import colors
 
     img = np.array(ImageOps.exif_transpose(Image.open(image_path)))  # upright, as dataloaders read it for training

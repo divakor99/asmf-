@@ -8,7 +8,6 @@ from pathlib import Path
 from typing import Any
 
 import torch
-
 from ultralytics.models import yolo
 from ultralytics.models.yolo.detect import DetectionTrainer
 from ultralytics.nn.tasks import DepthModel

@@ -10,12 +10,12 @@ import cv2
 import numpy as np
 import pytest
 import torch
-
-from tests import MODEL
 from ultralytics import solutions
 from ultralytics.utils import IS_RASPBERRYPI, TORCH_VERSION
 from ultralytics.utils.downloads import safe_download
 from ultralytics.utils.torch_utils import TORCH_2_4
+
+from tests import MODEL
 
 # Predefined argument values
 SHOW = False

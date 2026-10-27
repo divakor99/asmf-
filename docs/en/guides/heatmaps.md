@@ -61,7 +61,6 @@ Run the Heatmap solution on a video source from the CLI or Python. The Python ex
 
         ```python
         import cv2
-
         from ultralytics import solutions
 
         cap = cv2.VideoCapture("path/to/video.mp4")
@@ -184,7 +183,6 @@ Pass the `classes` argument to `Heatmap()` with the class indices you want to ke
 
 ```python
 import cv2
-
 from ultralytics import solutions
 
 cap = cv2.VideoCapture("path/to/video.mp4")

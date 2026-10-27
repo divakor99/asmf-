@@ -97,7 +97,6 @@ def _send(event, data, project, name, model_id=None, retry=2, timeout=30):
     if not _api_key:
         return None
     import httpx
-
     from ultralytics import APIError, Platform
 
     identity = {"model_id": model_id} if model_id else {"project": project, "name": name}
@@ -151,7 +150,6 @@ def _upload_model(model_path, project, name, progress=False, retry=1, model_id=N
         return None
     model_size = model_path.stat().st_size
     import httpx
-
     from ultralytics import APIError, Platform
 
     identity = {"model_id": model_id} if model_id else {"project": project, "name": name}
@@ -201,7 +199,6 @@ def _get_environment_info():
 
     import psutil
     import torch
-
     from ultralytics import __version__
     from ultralytics.utils.torch_utils import get_cpu_info, get_gpu_info
 

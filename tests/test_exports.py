@@ -12,9 +12,6 @@ from types import SimpleNamespace
 
 import pytest
 import torch
-
-from tests import SOURCE
-from tests.conftest import isolated_model_path
 from ultralytics import YOLO
 from ultralytics.cfg import TASK2DATA, TASK2MODEL, TASKS, _handle_deprecation, get_cfg
 from ultralytics.engine.exporter import EXPORT_ENVS, Exporter, export_formats, validate_args
@@ -37,6 +34,9 @@ from ultralytics.utils.torch_utils import (
     TORCH_2_1,
     TORCH_2_9,
 )
+
+from tests import SOURCE
+from tests.conftest import isolated_model_path
 
 
 def skip_rpi_semantic(task):
@@ -106,7 +106,6 @@ def test_onnx_int8_quantize_excludes_non_weighted_ops(monkeypatch):
     """Check ONNX INT8 keeps only weighted ops quantized while preserving the string return contract."""
     import onnx
     import onnxruntime.quantization as ort_quantization
-
     from ultralytics.utils.export.onnx import onnx_int8_quantize
 
     calls = {}

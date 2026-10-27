@@ -5,7 +5,6 @@ from __future__ import annotations
 from copy import copy
 
 import torch
-
 from ultralytics.data.utils import get_split_fraction
 from ultralytics.models.yolo.detect import DetectionTrainer
 from ultralytics.nn.tasks import RTDETRDetectionModel

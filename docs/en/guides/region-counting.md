@@ -56,7 +56,6 @@ Run the RegionCounter solution on a video source from the CLI or Python. A regio
 
         ```python
         import cv2
-
         from ultralytics import solutions
 
         cap = cv2.VideoCapture("path/to/video.mp4")
