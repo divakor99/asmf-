@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import torch
-
 from ultralytics.data import YOLODataset
 from ultralytics.data.utils import get_split_fraction
 from ultralytics.models.yolo.detect import DetectionValidator

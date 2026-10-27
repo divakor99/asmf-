@@ -7,7 +7,6 @@ from typing import Any
 
 import torch
 from torch import nn
-
 from ultralytics.utils import IS_JETSON, LOGGER, is_jetson
 from ultralytics.utils.torch_utils import TORCH_1_10, TORCH_2_1, unwrap_model
 

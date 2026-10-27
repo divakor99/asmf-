@@ -53,7 +53,6 @@ from typing import Any, Callable
 import cv2
 import numpy as np
 import torch
-
 from ultralytics.cfg import get_cfg, get_save_dir
 from ultralytics.data import load_inference_source
 from ultralytics.data.augment import LetterBox

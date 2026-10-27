@@ -11,7 +11,6 @@ import cv2
 import numpy as np
 import torch
 import torch.nn.functional as F
-
 from ultralytics.utils import NOT_MACOS14, TORCH_VERSION
 from ultralytics.utils.checks import check_version
 from ultralytics.utils.torch_utils import get_torch_device_backend

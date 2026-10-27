@@ -6,7 +6,6 @@ from multiprocessing.pool import ThreadPool
 
 import torch
 from PIL import Image
-
 from ultralytics.models.yolo.segment import SegmentationPredictor
 from ultralytics.utils import DEFAULT_CFG, NUM_THREADS
 from ultralytics.utils.metrics import box_iou

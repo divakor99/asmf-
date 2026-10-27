@@ -7,7 +7,6 @@ from typing import Any
 
 import torch
 from torch.nn import functional as F
-
 from ultralytics.data import YOLOConcatDataset, build_dataloader, build_yolo_dataset
 from ultralytics.data.augment import LoadVisualPrompt
 from ultralytics.data.utils import check_det_dataset, get_split_fraction

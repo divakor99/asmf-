@@ -5,7 +5,6 @@ from __future__ import annotations
 from pathlib import Path
 
 import torch
-
 from ultralytics.utils import LOGGER
 from ultralytics.utils.checks import check_requirements
 
@@ -31,7 +30,6 @@ class QNNBackend(BaseBackend):
         """
         check_requirements("onnxruntime-qnn")
         import onnxruntime
-
         from ultralytics.utils.export.qnn import qnn_library_paths
 
         onnx_file = Path(weight)

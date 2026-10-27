@@ -2,7 +2,6 @@
 
 import numpy as np
 import torch
-
 from ultralytics.data.augment import LoadVisualPrompt
 from ultralytics.models.yolo.detect import DetectionPredictor
 from ultralytics.models.yolo.segment import SegmentationPredictor

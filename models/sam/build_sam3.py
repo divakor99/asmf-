@@ -5,7 +5,6 @@
 from __future__ import annotations
 
 from torch import nn
-
 from ultralytics.nn.modules.transformer import MLP
 from ultralytics.utils.patches import torch_load
 

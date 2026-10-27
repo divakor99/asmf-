@@ -7,7 +7,6 @@ from typing import Any
 
 import numpy as np
 import torch
-
 from ultralytics.cfg import _handle_deprecation, get_cfg
 from ultralytics.data.build import load_inference_source
 from ultralytics.engine.model import PREDICTOR_SETUP_KEYS, Model

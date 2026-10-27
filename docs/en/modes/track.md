@@ -271,7 +271,6 @@ For better performance with a separate classification model, export it to a fast
 
     ```python
     from torch import nn
-
     from ultralytics import YOLO
 
     # Load the classification model
@@ -498,7 +497,6 @@ Here is a Python script using [OpenCV](https://www.ultralytics.com/glossary/open
 
     ```python
     import cv2
-
     from ultralytics import YOLO
 
     # Load the YOLO26 model
@@ -551,7 +549,6 @@ In the following example, we demonstrate how to utilize YOLO26's tracking capabi
 
     import cv2
     import numpy as np
-
     from ultralytics import YOLO
 
     # Load the YOLO26 model
@@ -628,7 +625,6 @@ Finally, after all threads have completed their task, the windows displaying the
     import threading
 
     import cv2
-
     from ultralytics import YOLO
 
     # Define model names and video sources
@@ -719,7 +715,6 @@ To run object tracking on multiple video streams simultaneously, you can use Pyt
     import threading
 
     import cv2
-
     from ultralytics import YOLO
 
     # Define model names and video sources
@@ -778,7 +773,6 @@ To visualize object tracks over multiple video frames, you can use the YOLO mode
 
     import cv2
     import numpy as np
-
     from ultralytics import YOLO
 
     model = YOLO("yolo26n.pt")

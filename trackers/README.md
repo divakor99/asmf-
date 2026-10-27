@@ -124,7 +124,6 @@ This Python script uses [OpenCV (`cv2`)](https://github.com/opencv/opencv) and U
 ```python
 # Python
 import cv2
-
 from ultralytics import YOLO
 
 # Load the YOLO26 model
@@ -175,7 +174,6 @@ from collections import defaultdict
 
 import cv2
 import numpy as np
-
 from ultralytics import YOLO
 
 # Load the YOLO26 model
@@ -251,7 +249,6 @@ Finally, `cv2.destroyAllWindows()` closes all OpenCV windows after the threads f
 import threading
 
 import cv2
-
 from ultralytics import YOLO
 
 # Define model names and video sources

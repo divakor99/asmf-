@@ -7,7 +7,6 @@ from typing import Any
 
 import numpy as np
 import torch
-
 from ultralytics.models.yolo.detect import DetectionValidator
 from ultralytics.utils import LOGGER, ops
 from ultralytics.utils.metrics import OBBMetrics, batch_probiou
@@ -226,7 +225,6 @@ class OBBValidator(DetectionValidator):
             >>> validator.save_one_txt(predn, True, (640, 480), Path("detection.txt"))
         """
         import numpy as np
-
         from ultralytics.engine.results import Results
 
         Results(

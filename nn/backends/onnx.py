@@ -10,7 +10,6 @@ from pathlib import Path
 
 import numpy as np
 import torch
-
 from ultralytics.utils import ARM64, LOGGER, USER_CONFIG_DIR, ThreadingLocked
 from ultralytics.utils.checks import IS_PYTHON_MINIMUM_3_11, check_requirements, rocm_is_available
 

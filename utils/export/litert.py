@@ -8,7 +8,6 @@ import zipfile
 from pathlib import Path
 
 import torch
-
 from ultralytics.nn.modules import Detect
 from ultralytics.utils import LOGGER
 from ultralytics.utils.export.engine import _NormalizeCoords

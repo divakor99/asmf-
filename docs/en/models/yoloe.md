@@ -253,7 +253,6 @@ The text-prompt call is the one shown in [Quick Start](#quick-start). Visual pro
 
         ```python
         import numpy as np
-
         from ultralytics import YOLOE
 
         model = YOLOE("yoloe-26l-seg.pt")
@@ -275,7 +274,6 @@ The text-prompt call is the one shown in [Quick Start](#quick-start). Visual pro
 
         ```python
         import numpy as np
-
         from ultralytics import YOLOE
 
         model = YOLOE("yoloe-26l-seg.pt")
@@ -303,7 +301,6 @@ The text-prompt call is the one shown in [Quick Start](#quick-start). Visual pro
         ```python
         import numpy as np
         import torch
-
         from ultralytics import YOLOE
 
         model = YOLOE("yoloe-11l-seg.pt")
@@ -323,7 +320,6 @@ The text-prompt call is the one shown in [Quick Start](#quick-start). Visual pro
 
         ```python
         import numpy as np
-
         from ultralytics import YOLOE
 
         model = YOLOE("yoloe-26l-seg.pt")
@@ -408,7 +404,6 @@ Prompt embeddings can be saved once and reused when producing static exports suc
 
         ```python
         import numpy as np
-
         from ultralytics import YOLOE
 
         model = YOLOE("yoloe-26n-seg.pt")

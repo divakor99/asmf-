@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import numpy as np
-
 from ultralytics.cfg import TASK2DATA, TASK2METRIC, get_cfg, get_save_dir
 from ultralytics.utils import DEFAULT_CFG, DEFAULT_CFG_DICT, LOGGER, NUM_THREADS, checks, colorstr
 

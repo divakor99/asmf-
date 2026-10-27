@@ -130,7 +130,6 @@ For example, users can load a model, train it, evaluate its performance on a val
         ```python
         import cv2
         from PIL import Image
-
         from ultralytics import YOLO
 
         model = YOLO("model.pt")

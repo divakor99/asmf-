@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import torch
 from torch import nn
-
 from ultralytics.nn.modules import MLP, LayerNorm2d
 
 

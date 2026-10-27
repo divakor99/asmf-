@@ -1,58 +1,57 @@
-
 # Ultralytics YOLO26-seg with refined P3 for small-object segmentation
 # Based on the supplied YOLO26-seg architecture.
 # P3 refinement: additional C3k2 feature-refinement block.
 # Outputs: P3/8, P4/16, P5/32
 
 # Parameters
-nc: 80  # Change to the number of classes in your dataset
+nc: 80 # Change to the number of classes in your dataset
 end2end: True
 reg_max: 1
 
 # Model compound scaling constants
 scales:
-  n: [0.50, 0.25, 1024]  # YOLO26n
-  s: [0.50, 0.50, 1024]  # YOLO26s
-  m: [0.50, 1.00, 512]   # YOLO26m
-  l: [1.00, 1.00, 512]   # YOLO26l
-  x: [1.00, 1.50, 512]   # YOLO26x
+  n: [0.50, 0.25, 1024] # YOLO26n
+  s: [0.50, 0.50, 1024] # YOLO26s
+  m: [0.50, 1.00, 512] # YOLO26m
+  l: [1.00, 1.00, 512] # YOLO26l
+  x: [1.00, 1.50, 512] # YOLO26x
 
 # YOLO26 backbone
 backbone:
   # [from, repeats, module, args]
-  - [-1, 1, Conv, [64, 3, 2]]                 # 0 - P1/2
-  - [-1, 1, Conv, [128, 3, 2]]                # 1 - P2/4
-  - [-1, 2, C3k2, [256, False, 0.25]]         # 2
-  - [-1, 1, Conv, [256, 3, 2]]                # 3 - P3/8
-  - [-1, 2, C3k2, [512, False, 0.25]]         # 4
-  - [-1, 1, Conv, [512, 3, 2]]                # 5 - P4/16
-  - [-1, 2, C3k2, [512, True]]                # 6
-  - [-1, 1, Conv, [1024, 3, 2]]               # 7 - P5/32
-  - [-1, 2, C3k2, [1024, True]]               # 8
-  - [-1, 1, SPPF, [1024, 5, 3, True]]         # 9
-  - [-1, 2, C2PSA, [1024]]                    # 10
+  - [-1, 1, Conv, [64, 3, 2]] # 0 - P1/2
+  - [-1, 1, Conv, [128, 3, 2]] # 1 - P2/4
+  - [-1, 2, C3k2, [256, False, 0.25]] # 2
+  - [-1, 1, Conv, [256, 3, 2]] # 3 - P3/8
+  - [-1, 2, C3k2, [512, False, 0.25]] # 4
+  - [-1, 1, Conv, [512, 3, 2]] # 5 - P4/16
+  - [-1, 2, C3k2, [512, True]] # 6
+  - [-1, 1, Conv, [1024, 3, 2]] # 7 - P5/32
+  - [-1, 2, C3k2, [1024, True]] # 8
+  - [-1, 1, SPPF, [1024, 5, 3, True]] # 9
+  - [-1, 2, C2PSA, [1024]] # 10
 
 # YOLO26 head with P3 refinement
 head:
   - [-1, 1, nn.Upsample, [None, 2, "nearest"]] # 11
-  - [[-1, 6], 1, Concat, [1]]                  # 12 - Fuse backbone P4
-  - [-1, 2, C3k2, [512, True]]                 # 13 - P4 top-down
+  - [[-1, 6], 1, Concat, [1]] # 12 - Fuse backbone P4
+  - [-1, 2, C3k2, [512, True]] # 13 - P4 top-down
 
   - [-1, 1, nn.Upsample, [None, 2, "nearest"]] # 14
-  - [[-1, 4], 1, Concat, [1]]                  # 15 - Fuse backbone P3
-  - [-1, 2, C3k2, [256, True]]                 # 16 - P3 features
+  - [[-1, 4], 1, Concat, [1]] # 15 - Fuse backbone P3
+  - [-1, 2, C3k2, [256, True]] # 16 - P3 features
 
   # NEW: P3 refinement for small objects
-  - [-1, 1, C3k2, [256, True]]                 # 17 - Refined P3/8
+  - [-1, 1, C3k2, [256, True]] # 17 - Refined P3/8
 
   # Bottom-up feature fusion
-  - [-1, 1, Conv, [256, 3, 2]]                 # 18 - Downsample P3
-  - [[-1, 13], 1, Concat, [1]]                 # 19 - Fuse P4
-  - [-1, 2, C3k2, [512, True]]                 # 20 - P4/16
+  - [-1, 1, Conv, [256, 3, 2]] # 18 - Downsample P3
+  - [[-1, 13], 1, Concat, [1]] # 19 - Fuse P4
+  - [-1, 2, C3k2, [512, True]] # 20 - P4/16
 
-  - [-1, 1, Conv, [512, 3, 2]]                 # 21 - Downsample P4
-  - [[-1, 10], 1, Concat, [1]]                 # 22 - Fuse backbone P5
-  - [-1, 2, C3k2, [1024, True, 0.5, True]]     # 23 - P5/32
+  - [-1, 1, Conv, [512, 3, 2]] # 21 - Downsample P4
+  - [[-1, 10], 1, Concat, [1]] # 22 - Fuse backbone P5
+  - [-1, 2, C3k2, [1024, True, 0.5, True]] # 23 - P5/32
 
   # Instance segmentation outputs
   - [[17, 20, 23], 1, Segment26, [nc, 32, 256]] # 24 - P3, P4, P5

@@ -15,10 +15,8 @@ import cv2
 import numpy as np
 import pytest
 import torch
-from PIL import Image
-
 import ultralytics.data.build as data_build
-from tests import CFG, MODEL, MODELS, SOURCE, SOURCES_LIST, TASK_MODEL_DATA
+from PIL import Image
 from ultralytics import RTDETR, YOLO
 from ultralytics.cfg import get_cfg
 from ultralytics.data.build import build_dataloader, load_inference_source
@@ -44,6 +42,8 @@ from ultralytics.utils import (
 )
 from ultralytics.utils.downloads import download, safe_download
 from ultralytics.utils.torch_utils import TORCH_1_10, TORCH_1_11, TORCH_1_13, TORCH_2_0
+
+from tests import CFG, MODEL, MODELS, SOURCE, SOURCES_LIST, TASK_MODEL_DATA
 
 
 def test_predict_prefetch():
@@ -890,7 +890,6 @@ def test_ndjson_conversion_concurrency_and_resume(monkeypatch, tmp_path, task):
     from concurrent.futures import ThreadPoolExecutor
 
     import aiohttp
-
     from ultralytics.data import converter
 
     counts, failures, conversions, count_lock = {}, set(), 0, threading.Lock()
@@ -2018,7 +2017,6 @@ def _depth_head_feats():
 def test_nn_depth_head_export_upsamples_to_input():
     """Depth export upsamples x4 on the depth loss align_corners=True grid; inference returns native head resolution."""
     import torch.nn.functional as F
-
     from ultralytics.nn.modules.head import Depth
 
     head, x = Depth(c_mid=32, ch=(32, 64, 128)).eval(), _depth_head_feats()

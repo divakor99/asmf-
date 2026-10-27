@@ -7,7 +7,6 @@ from typing import Any
 
 import numpy as np
 import torch
-
 from ultralytics.data.utils import add_polygon_background
 from ultralytics.models import yolo
 from ultralytics.models.yolo.detect import DetectionTrainer

@@ -115,7 +115,6 @@ In this example, we demonstrate how to use a custom search space for hyperparame
 
     ```python
     from ray import tune
-
     from ultralytics import YOLO
 
     # Define a YOLO model
@@ -158,7 +157,6 @@ If you need to customize the searcher's sampler or override its metric and optim
 
     ```python
     from ray.tune.search.optuna import OptunaSearch
-
     from ultralytics import YOLO
 
     # Define a YOLO model
@@ -348,7 +346,6 @@ To define a custom search space for your YOLO26 hyperparameter tuning with Ray T
 
 ```python
 from ray import tune
-
 from ultralytics import YOLO
 
 model = YOLO("yolo26n.pt")

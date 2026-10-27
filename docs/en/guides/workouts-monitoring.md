@@ -60,7 +60,6 @@ The `AIGym` solution runs [pose estimation](../tasks/pose.md) and counts repetit
 
         ```python
         import cv2
-
         from ultralytics import solutions
 
         cap = cv2.VideoCapture("path/to/video.mp4")
@@ -125,7 +124,6 @@ To monitor your workouts using Ultralytics YOLO26, you can utilize the [pose est
 
 ```python
 import cv2
-
 from ultralytics import solutions
 
 cap = cv2.VideoCapture("path/to/video.mp4")
@@ -189,7 +187,6 @@ To save the workout monitoring output, you can modify the code to include a vide
 
 ```python
 import cv2
-
 from ultralytics import solutions
 
 cap = cv2.VideoCapture("path/to/video.mp4")

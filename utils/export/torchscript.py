@@ -6,7 +6,6 @@ import json
 from pathlib import Path
 
 import torch
-
 from ultralytics.utils import LOGGER, TORCH_VERSION
 
 

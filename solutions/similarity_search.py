@@ -7,7 +7,6 @@ from pathlib import Path
 
 import numpy as np
 from PIL import Image
-
 from ultralytics.data.utils import IMG_FORMATS
 from ultralytics.utils import LOGGER, TORCH_VERSION
 from ultralytics.utils.checks import check_requirements

@@ -10,7 +10,6 @@ from typing import Any
 import cv2
 import numpy as np
 import torch
-
 from ultralytics import YOLO
 from ultralytics.solutions.config import SolutionConfig
 from ultralytics.utils import ASSETS_URL, LOGGER, ops

@@ -62,7 +62,6 @@ Define a counting `region` — two points for a line or three or more for a poly
 
         ```python
         import cv2
-
         from ultralytics import solutions
 
         cap = cv2.VideoCapture("path/to/video.mp4")
@@ -135,7 +134,6 @@ Here's a simple example for counting in a region:
 
 ```python
 import cv2
-
 from ultralytics import solutions
 
 
@@ -184,7 +182,6 @@ To count specific classes of objects using Ultralytics YOLO26, you need to speci
 
 ```python
 import cv2
-
 from ultralytics import solutions
 
 

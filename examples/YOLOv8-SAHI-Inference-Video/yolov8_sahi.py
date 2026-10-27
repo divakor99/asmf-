@@ -5,7 +5,6 @@ import argparse
 import cv2
 from sahi import AutoDetectionModel
 from sahi.predict import get_sliced_prediction
-
 from ultralytics.utils.files import increment_path
 
 

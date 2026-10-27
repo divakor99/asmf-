@@ -108,7 +108,6 @@ import io
 
 import cv2
 from sixel import SixelWriter
-
 from ultralytics import YOLO
 
 # Load a model

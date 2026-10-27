@@ -20,7 +20,6 @@ import time
 from datetime import datetime
 
 import numpy as np
-
 from ultralytics.cfg import CFG_INT_KEYS, TASK2METRIC, get_cfg, get_save_dir
 from ultralytics.utils import LOGGER, YAML, callbacks, colorstr, remove_colorstr
 from ultralytics.utils.checks import check_requirements

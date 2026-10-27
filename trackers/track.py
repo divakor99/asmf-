@@ -3,7 +3,6 @@
 from functools import partial
 
 import torch
-
 from ultralytics.cfg import TASKS
 from ultralytics.utils import YAML, IterableSimpleNamespace
 from ultralytics.utils.checks import check_yaml

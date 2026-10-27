@@ -46,7 +46,6 @@ You can customize each parameter using the Python API, the command line interfac
 
         ```python
         import albumentations as A
-
         from ultralytics import YOLO
 
         # Load a model
@@ -410,7 +409,6 @@ The examples below need Albumentations 1.4.22 or newer, and therefore Python 3.9
 
         ```python
         import albumentations as A
-
         from ultralytics import YOLO
 
         # Load a model
@@ -438,7 +436,6 @@ The examples below need Albumentations 1.4.22 or newer, and therefore Python 3.9
 
         ```python
         import albumentations as A
-
         from ultralytics import YOLO
 
         # Load a model

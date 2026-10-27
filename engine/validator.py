@@ -41,7 +41,6 @@ from pathlib import Path
 import numpy as np
 import torch
 import torch.distributed as dist
-
 from ultralytics.cfg import get_cfg, get_save_dir
 from ultralytics.data.utils import check_cls_dataset, check_det_dataset, convert_ndjson_to_yolo_if_needed
 from ultralytics.nn.autobackend import AutoBackend
