@@ -8,7 +8,6 @@ from __future__ import annotations
 import numpy as np
 import torch
 from torch import nn
-
 from ultralytics.nn.modules.transformer import MLP
 from ultralytics.nn.modules.utils import _get_clones, inverse_sigmoid
 from ultralytics.utils.ops import xywh2xyxy

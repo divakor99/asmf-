@@ -8,7 +8,6 @@ from typing import Any
 
 import torch
 from torch import nn
-
 from ultralytics.nn.modules import Detect
 from ultralytics.utils import LOGGER
 from ultralytics.utils.checks import check_requirements

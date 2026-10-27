@@ -9,7 +9,6 @@ from typing import Any
 import numpy as np
 import torch
 import torch.distributed as dist
-
 from ultralytics.data import build_dataloader, build_yolo_dataset, converter
 from ultralytics.data.utils import get_split_fraction
 from ultralytics.engine.validator import BaseValidator

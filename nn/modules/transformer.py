@@ -9,7 +9,6 @@ import torch
 import torch.nn.functional as F
 from torch import nn
 from torch.nn.init import constant_, xavier_uniform_
-
 from ultralytics.utils.torch_utils import TORCH_1_11
 
 from .conv import Conv

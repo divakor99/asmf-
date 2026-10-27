@@ -7,7 +7,6 @@ from types import MethodType
 from typing import Any
 
 import torch
-
 from ultralytics.engine.model import Model
 from ultralytics.utils import DEFAULT_CFG_DICT
 from ultralytics.utils.checks import check_model_file_from_stem

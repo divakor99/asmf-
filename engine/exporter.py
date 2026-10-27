@@ -80,7 +80,6 @@ from pathlib import Path
 
 import numpy as np
 import torch
-
 from ultralytics import __version__
 from ultralytics.cfg import QUANTIZE_DOCS_URL, TASK2CALIBRATIONDATA, TASK2DATA, get_cfg
 from ultralytics.data import build_dataloader, build_yolo_dataset
@@ -1135,7 +1134,6 @@ class Exporter:
             requirements += ["onnxslim>=0.1.82"]
         check_requirements(requirements)
         import onnx
-
         from ultralytics.utils.export.engine import best_onnx_opset, torch2onnx
 
         opset = self.args.opset or best_onnx_opset(onnx)

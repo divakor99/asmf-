@@ -26,7 +26,6 @@ from urllib.parse import unquote
 import cv2
 import numpy as np
 import torch
-
 from ultralytics import __version__
 from ultralytics.utils.git import GitRepo
 from ultralytics.utils.patches import imread as imread  # re-export for backwards compatibility

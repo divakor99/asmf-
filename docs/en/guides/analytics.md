@@ -61,7 +61,6 @@ Pass your video to the `Analytics` solution and select a chart with `analytics_t
 
         ```python
         import cv2
-
         from ultralytics import solutions
 
         cap = cv2.VideoCapture("path/to/video.mp4")

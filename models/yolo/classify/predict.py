@@ -6,7 +6,6 @@ import cv2
 import numpy as np
 import torch
 from PIL import Image
-
 from ultralytics.data.augment import classify_transforms
 from ultralytics.engine.predictor import BasePredictor
 from ultralytics.engine.results import Results

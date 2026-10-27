@@ -7,7 +7,6 @@ import os
 
 import cv2
 import torch
-
 from ultralytics import YOLO
 from ultralytics.utils import LOGGER
 from ultralytics.utils.checks import check_requirements

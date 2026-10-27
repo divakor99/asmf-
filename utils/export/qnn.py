@@ -79,7 +79,6 @@ def onnx2qnn(
     from onnxruntime.quantization import QuantType, quantize
     from onnxruntime.quantization.execution_providers.qnn import get_qnn_qdq_config
     from onnxruntime.quantization.shape_inference import quant_pre_process
-
     from ultralytics.utils.export.onnx import onnx_calibration_reader
 
     ep_library, htp_backend = qnn_library_paths()

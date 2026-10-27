@@ -6,7 +6,6 @@ from copy import copy
 from typing import Any
 
 import torch
-
 from ultralytics.data import ClassificationDataset, build_dataloader
 from ultralytics.engine.trainer import BaseTrainer
 from ultralytics.models import yolo

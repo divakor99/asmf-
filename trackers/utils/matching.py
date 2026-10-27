@@ -1,7 +1,6 @@
 # Ultralytics 🚀 AGPL-3.0 License - https://ultralytics.com/license
 
 import numpy as np
-
 from ultralytics.utils.metrics import batch_probiou, bbox_ioa
 
 try:

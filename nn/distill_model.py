@@ -7,7 +7,6 @@ from pathlib import Path
 import torch
 import torch.nn.functional as F
 from torch import nn
-
 from ultralytics.nn.modules.head import Detect
 from ultralytics.utils.torch_utils import copy_attr
 

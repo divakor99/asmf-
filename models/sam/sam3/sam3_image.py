@@ -7,7 +7,6 @@ from __future__ import annotations
 from copy import deepcopy
 
 import torch
-
 from ultralytics.nn.modules.utils import inverse_sigmoid
 from ultralytics.utils.ops import xywh2xyxy
 

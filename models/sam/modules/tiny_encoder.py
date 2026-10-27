@@ -16,7 +16,6 @@ import itertools
 import torch
 import torch.nn.functional as F
 from torch import nn
-
 from ultralytics.nn.modules import LayerNorm2d
 from ultralytics.utils.instance import to_2tuple
 from ultralytics.utils.torch_utils import TORCH_1_11

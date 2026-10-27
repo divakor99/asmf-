@@ -17,6 +17,7 @@ Examples:
 """
 
 from .block import (
+    ACMF,
     C1,
     C2,
     C2PSA,
@@ -58,7 +59,6 @@ from .block import (
     ResNetLayer,
     SCDown,
     TorchVision,
-    ACMF,
 )
 from .conv import (
     CBAM,
@@ -109,6 +109,7 @@ from .transformer import (
 )
 
 __all__ = (
+    "ACMF",
     "AIFI",
     "C1",
     "C2",
@@ -191,5 +192,4 @@ __all__ = (
     "YOLOESegment",
     "YOLOESegment26",
     "v10Detect",
-    "ACMF",
 )

@@ -10,7 +10,6 @@ import torch
 import torch.nn.functional as F
 from torch import nn
 from torch.nn.init import constant_, xavier_uniform_
-
 from ultralytics.utils import LOGGER
 from ultralytics.utils.tal import dist2bbox, dist2rbox, make_anchors
 from ultralytics.utils.torch_utils import TORCH_1_11, fuse_conv_and_bn, smart_inference_mode

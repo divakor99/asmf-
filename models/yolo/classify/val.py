@@ -7,7 +7,6 @@ from typing import Any
 
 import torch
 import torch.distributed as dist
-
 from ultralytics.data import ClassificationDataset, build_dataloader
 from ultralytics.engine.validator import BaseValidator
 from ultralytics.utils import LOGGER, RANK

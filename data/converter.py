@@ -18,7 +18,6 @@ from uuid import uuid4
 import cv2
 import numpy as np
 from PIL import Image
-
 from ultralytics.data.utils import get_split_fraction, read_mask
 from ultralytics.utils import (
     ASSETS_URL,

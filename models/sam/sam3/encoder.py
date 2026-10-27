@@ -6,7 +6,6 @@ from __future__ import annotations
 
 import torch
 from torch import nn
-
 from ultralytics.nn.modules.utils import _get_clones
 
 from .model_misc import get_valid_ratio

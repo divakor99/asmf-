@@ -10,7 +10,6 @@ import torch
 import torch.nn.functional as F
 from torch import nn
 from torch.utils import checkpoint
-
 from ultralytics.nn.modules.transformer import MLP
 
 

@@ -9,7 +9,6 @@ import torch
 import torch.nn.functional as F
 from torch import nn
 from torch.nn.init import trunc_normal_
-
 from ultralytics.nn.modules import MLP
 from ultralytics.utils import LOGGER
 

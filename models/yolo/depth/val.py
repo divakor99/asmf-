@@ -9,7 +9,6 @@ from typing import Any
 import torch
 import torch.distributed as dist
 import torch.nn.functional as F
-
 from ultralytics.models.yolo.detect import DetectionValidator
 from ultralytics.utils import LOGGER, RANK
 from ultralytics.utils.metrics import DepthMetrics

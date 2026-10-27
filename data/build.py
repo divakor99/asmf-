@@ -16,7 +16,6 @@ import torch
 import torch.distributed as dist
 from PIL import Image
 from torch.utils.data import Dataset, dataloader, distributed
-
 from ultralytics.cfg import IterableSimpleNamespace
 from ultralytics.data.dataset import (
     DepthDataset,
