@@ -1,0 +1,48 @@
+#Approach	Best use	Main trade-off
+#Refine P3	Small defects with manageable compute	Limited by stride 8
+#Add P2/4	Tiny cracks and very narrow defects	More memory and computation
+#Refine P3 + add P2	Highest-priority small-object experiments	More complex architecture
+nc: 80
+end2end: True
+reg_max: 1
+scales:
+#  n: [0.50, 0.25, 1024]
+#  s: [0.50, 0.50, 1024]
+#  m: [0.50, 1.00, 512]
+  l: [1.00, 1.00, 512]
+#  x: [1.00, 1.50, 512]
+scale: l
+
+backbone:
+  - [-1, 1, Conv, [64, 3, 2]]
+  - [-1, 1, Conv, [128, 3, 2]]
+  - [-1, 2, C3k2, [256, False, 0.25]]
+  - [-1, 1, Conv, [256, 3, 2]]
+  - [-1, 2, C3k2, [512, False, 0.25]]
+  - [-1, 1, Conv, [512, 3, 2]]
+  - [-1, 2, C3k2, [512, True]]
+  - [-1, 1, Conv, [1024, 3, 2]]
+  - [-1, 2, C3k2, [1024, True]]
+  - [-1, 1, SPPF, [1024, 5, 3, True]]
+  - [-1, 2, C2PSA, [1024]]
+
+head:
+  - [-1, 1, nn.Upsample, [None, 2, "nearest"]]   # 11
+  - [[-1, 6], 1, Concat, [1]]                    # 12  cat backbone P4
+  - [-1, 2, C3k2, [512, True]]                   # 13  P4 td
+
+  - [-1, 1, nn.Upsample, [None, 2, "nearest"]]   # 14
+  - [[-1, 4], 1, Concat, [1]]                    # 15  cat backbone P3
+  - [-1, 2, C3k2, [256, True]]                   # 16  P3 td (P3/8-small)
+
+  - [-1, 1, C3k2, [256, True]]                   # 17  P3 refinement ← NEW
+
+  - [-1, 1, Conv, [256, 3, 2]]                   # 18
+  - [[-1, 13], 1, Concat, [1]]                   # 19  cat P4 td  (layer 13) ✅
+  - [-1, 2, C3k2, [512, True]]                   # 20  P4 out
+
+  - [-1, 1, Conv, [512, 3, 2]]                   # 21
+  - [[-1, 10], 1, Concat, [1]]                   # 22  cat P5 backbone (layer 10) ✅
+  - [-1, 1, C3k2, [1024, True, 0.5, True]]       # 23  P5 out
+
+  - [[17, 20, 23], 1, Segment26, [nc, 32, 256]]  # 24
