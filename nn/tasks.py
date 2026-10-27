@@ -2068,6 +2068,229 @@ def load_checkpoint(weight, device=None, inplace=True, fuse=False):
     # Return model and ckpt
     return model, ckpt
 
+##################best
+# def parse_model(d, ch, verbose=True):
+#     """Parse a YOLO model.yaml dictionary into a PyTorch model.
+#
+#     Args:
+#         d (dict): Model dictionary.
+#         ch (int): Input channels.
+#         verbose (bool): Whether to print model details.
+#
+#     Returns:
+#         model (torch.nn.Sequential): PyTorch model.
+#         save (list): Sorted list of layer indices whose outputs need to be saved.
+#     """
+#     import ast
+#
+#     # Args
+#     legacy = True  # backward compatibility for v3/v5/v8/v9 models
+#     max_channels = float("inf")
+#     nc, act, scales, end2end = (d.get(x) for x in ("nc", "activation", "scales", "end2end"))
+#     reg_max = d.get("reg_max", 16)
+#     depth, width, kpt_shape = (d.get(x, 1.0) for x in ("depth_multiple", "width_multiple", "kpt_shape"))
+#     scale = d.get("scale")
+#     if scales:
+#         if not scale:
+#             scale = next(iter(scales.keys()))
+#             LOGGER.warning(f"no model scale passed. Assuming scale='{scale}'.")
+#         depth, width, max_channels = scales[scale]
+#
+#     restricted = _SafeLoad.restricted()
+#     default_act = Conv.default_act  # restore before returning: Conv.default_act is process-wide state
+#     if act:
+#         # redefine default activation, i.e. Conv.default_act = torch.nn.SiLU(). Under restricted loading, resolve the
+#         # spec without eval() (see _SafeLoad.activation).
+#         Conv.default_act = _SafeLoad.activation(act) if restricted else eval(act)
+#         if verbose:
+#             LOGGER.info(f"{colorstr('activation:')} {act}")  # print
+#
+#     if verbose:
+#         LOGGER.info(f"\n{'':>3}{'from':>20}{'n':>3}{'params':>10}  {'module':<45}{'arguments':<30}")
+#     ch = [ch]
+#     layers, save, c2 = [], [], ch[-1]  # layers, savelist, ch out
+#     base_modules = frozenset(
+#         {
+#             Classify,
+#             Conv,
+#             ConvTranspose,
+#             GhostConv,
+#             Bottleneck,
+#             GhostBottleneck,
+#             SPP,
+#             SPPF,
+#             C2fPSA,
+#             C2PSA,
+#             DWConv,
+#             Focus,
+#             BottleneckCSP,
+#             C1,
+#             C2,
+#             C2f,
+#             C3k2,
+#             RepNCSPELAN4,
+#             ELAN1,
+#             ADown,
+#             AConv,
+#             SPPELAN,
+#             C2fAttn,
+#             C3,
+#             C3TR,
+#             C3Ghost,
+#             torch.nn.ConvTranspose2d,
+#             DWConvTranspose2d,
+#             C3x,
+#             RepC3,
+#             PSA,
+#             SCDown,
+#             C2fCIB,
+#             A2C2f,
+#         }
+#     )
+#     repeat_modules = frozenset(  # modules with 'repeat' arguments
+#         {
+#             BottleneckCSP,
+#             C1,
+#             C2,
+#             C2f,
+#             C3k2,
+#             C2fAttn,
+#             C3,
+#             C3TR,
+#             C3Ghost,
+#             C3x,
+#             RepC3,
+#             C2fPSA,
+#             C2fCIB,
+#             C2PSA,
+#             A2C2f,
+#         }
+#     )
+#     for i, (f, n, m, args) in enumerate(d["backbone"] + d["head"]):  # from, number, module, args
+#         m = (
+#             getattr(torch.nn, m[3:])
+#             if m.startswith("nn.")
+#             else getattr(__import__("torchvision").ops, m[16:])
+#             if m.startswith("torchvision.ops.")
+#             else globals()[m]
+#         )  # get module
+#         if restricted and not (isinstance(m, type) and issubclass(m, torch.nn.Module)):
+#             # Under restricted loading, only known model layers may be named here.
+#             raise TypeError(emojis(f"ERROR ❌️ module '{m}' is not a permitted model layer under restricted loading."))
+#         for j, a in enumerate(args):
+#             if isinstance(a, str):
+#                 with contextlib.suppress(ValueError):
+#                     args[j] = locals()[a] if a in locals() else ast.literal_eval(a)
+#         n = n_ = max(round(n * depth), 1) if n > 1 else n  # depth gain
+#         if m in base_modules:
+#             c1, c2 = ch[f], args[0]
+#             if m is not Classify:  # Classify() output must stay at nc; every other layer scales by width
+#                 c2 = make_divisible(min(c2, max_channels) * width, 8)
+#             if m is C2fAttn:  # set 1) embed channels and 2) num heads
+#                 args[2] = int(max(round(min(args[2], max_channels // 2 // 32)) * width, 1) if args[2] > 1 else args[2])
+#                 hidden_channels = int(c2 * (args[6] if len(args) > 6 else 0.5))
+#                 if hidden_channels % args[2]:
+#                     raise ValueError(
+#                         f"C2fAttn hidden channels {hidden_channels} (from c2={c2}) must be divisible by nh={args[2]}; "
+#                         "adjust width_multiple, nh, or C2fAttn expansion"
+#                     )
+#                 args[1] = hidden_channels
+#
+#             args = [c1, c2, *args[1:]]
+#             if m in repeat_modules:
+#                 args.insert(2, n)  # number of repeats
+#                 n = 1
+#             if m is C3k2:  # for M/L/X sizes
+#                 legacy = False
+#                 if scale in {"m", "l", "x"}:
+#                     args[3:4] = [True]  # slice assignment also supplies c3k when the YAML omits it
+#             if m is A2C2f:
+#                 legacy = False
+#                 if scale in {"l", "x"}:  # for L/X sizes
+#                     args.extend((True, 1.2))
+#             if m is C2fCIB:
+#                 legacy = False
+#         elif m is AIFI:
+#             args = [ch[f], *args]
+#         elif m in frozenset({HGStem, HGBlock}):
+#             c1, cm, c2 = ch[f], args[0], args[1]
+#             args = [c1, cm, c2, *args[2:]]
+#             if m is HGBlock:
+#                 args.insert(4, n)  # number of repeats
+#                 n = 1
+#         elif m is ResNetLayer:
+#             c2 = args[1] if args[3] else args[1] * 4
+#         elif m is torch.nn.BatchNorm2d:
+#             args = [ch[f]]
+#         elif m is Concat:
+#             c2 = sum(ch[x] for x in f)
+#         elif m is ACMF:  # ← NEW: Adaptive Channel Multi-Scale Fusion head
+#             # f is a list of 3 backbone/neck layer indices (P3, P4, P5).
+#             # ACMF aligns all scales to ch[f[0]] (the P3 width) internally.
+#             args = [[ch[x] for x in f]]
+#             c2 = ch[f[0]]
+#         elif m in frozenset(
+#             {
+#                 Detect,
+#                 WorldDetect,
+#                 YOLOEDetect,
+#                 Segment,
+#                 Segment26,
+#                 YOLOESegment,
+#                 YOLOESegment26,
+#                 Pose,
+#                 Pose26,
+#                 OBB,
+#                 OBB26,
+#             }
+#         ):
+#             # ← NEW: support both list-valued f (standard) and int f (single multi-output source like ACMF).
+#             # When f is an int, the source layer returns a list of N tensors of equal width, so replicate ch[f].
+#             ch_list = [ch[f]] * 3 if isinstance(f, int) else [ch[x] for x in f]
+#             args.extend([reg_max, end2end, ch_list])
+#             if m is Segment or m is YOLOESegment or m is Segment26 or m is YOLOESegment26:
+#                 args[2] = make_divisible(min(args[2], max_channels) * width, 8)
+#             if m in {Detect, YOLOEDetect, Segment, Segment26, YOLOESegment, YOLOESegment26, Pose, Pose26, OBB, OBB26}:
+#                 m.legacy = legacy
+#         elif m is Depth:
+#             args = [*args[:1], [ch[x] for x in f]]  # c_mid, ch tuple; drops the legacy mode arg old checkpoints store
+#         elif m is SemanticSegment:
+#             args.append([ch[x] for x in f])  # nc, ch tuple
+#         elif m is v10Detect:
+#             args.append([ch[x] for x in f])
+#         elif m is ImagePoolingAttn:
+#             args.insert(1, [ch[x] for x in f])  # channels as second arg
+#         elif m is RTDETRDecoder:  # special case, channels arg must be passed in index 1
+#             args.insert(1, [ch[x] for x in f])
+#         elif m is CBLinear:
+#             c2 = args[0]
+#             c1 = ch[f]
+#             args = [c1, c2, *args[1:]]
+#         elif m is CBFuse:
+#             c2 = ch[f[-1]]
+#         elif m in frozenset({TorchVision, Index}):
+#             c2 = args[0]
+#             c1 = ch[f]
+#             args = [*args[1:]]
+#         else:
+#             c2 = ch[f]
+#
+#         m_ = torch.nn.Sequential(*(m(*args) for _ in range(n))) if n > 1 else m(*args)  # module
+#         if m is SPPF and len(args) <= 3:  # Legacy YAML rows predate the unactivated YOLO26 SPPF.
+#             for block in m_ if n > 1 else [m_]:
+#                 block.cv1.act = Conv.default_act
+#         t = str(m)[8:-2].replace("__main__.", "")  # module type
+#         m_.np = sum(x.numel() for x in m_.parameters())  # number params
+#         m_.i, m_.f, m_.type = i, f, t  # attach index, 'from' index, type
+#         if verbose:
+#             LOGGER.info(f"{i:>3}{f!s:>20}{n_:>3}{m_.np:10.0f}  {t:<45}{args!s:<30}")  # print
+#         save.extend(x % i for x in ([f] if isinstance(f, int) else f) if x != -1)  # append to savelist
+#         layers.append(m_)
+#         if i == 0:
+#             ch = []
+#         ch.append(c2)
+#     Conv.default_act = default_act
+#     return torch.nn.Sequential(*layers), sorted(save)
 
 def parse_model(d, ch, verbose=True):
     """Parse a YOLO model.yaml dictionary into a PyTorch model.
@@ -2109,6 +2332,7 @@ def parse_model(d, ch, verbose=True):
         LOGGER.info(f"\n{'':>3}{'from':>20}{'n':>3}{'params':>10}  {'module':<45}{'arguments':<30}")
     ch = [ch]
     layers, save, c2 = [], [], ch[-1]  # layers, savelist, ch out
+    acmf_ch = {}  # layer index -> per-scale output widths of ACMF layers
     base_modules = frozenset(
         {
             Classify,
@@ -2224,11 +2448,12 @@ def parse_model(d, ch, verbose=True):
             args = [ch[f]]
         elif m is Concat:
             c2 = sum(ch[x] for x in f)
-        elif m is ACMF:  # ← NEW: Adaptive Channel Multi-Scale Fusion head
-            # f is a list of 3 backbone/neck layer indices (P3, P4, P5).
-            # ACMF aligns all scales to ch[f[0]] (the P3 width) internally.
-            args = [[ch[x] for x in f]]
-            c2 = ch[f[0]]
+        elif m is ACMF:  # Adaptive Channel Multi-Scale Fusion
+            # Module takes the input widths and returns a pyramid with the SAME widths per scale.
+            in_ch = [ch[x] for x in f]
+            args = [in_ch]
+            acmf_ch[i] = in_ch  # remembered for the head
+            c2 = ch[f[0]]  # int placeholder so ch[] stays a list of ints
         elif m in frozenset(
             {
                 Detect,
@@ -2244,9 +2469,11 @@ def parse_model(d, ch, verbose=True):
                 OBB26,
             }
         ):
-            # ← NEW: support both list-valued f (standard) and int f (single multi-output source like ACMF).
-            # When f is an int, the source layer returns a list of N tensors of equal width, so replicate ch[f].
-            ch_list = [ch[f]] * 3 if isinstance(f, int) else [ch[x] for x in f]
+            # f is an int when the source layer is ACMF (returns a list of per-scale tensors)
+            if isinstance(f, int):
+                ch_list = acmf_ch[f] if f in acmf_ch else [ch[f]] * 3
+            else:
+                ch_list = [ch[x] for x in f]
             args.extend([reg_max, end2end, ch_list])
             if m is Segment or m is YOLOESegment or m is Segment26 or m is YOLOESegment26:
                 args[2] = make_divisible(min(args[2], max_channels) * width, 8)

@@ -2115,48 +2115,87 @@ class RealNVP(nn.Module):
         # Closed-form log N(z; 0, I) in 2-D; fp32 keeps z**2 from overflowing under AMP.
         return -0.5 * (z.float() ** 2).sum(-1) - math.log(2 * math.pi) + log_det
 # Add this class to ultralytics/nn/modules/block.py
-
+######################best working
+# class ACMF(nn.Module):
+#     """Adaptive Channel Multi-Scale Fusion: cross-scale channel attention, returns a pyramid."""
+#
+#     def __init__(self, ch: tuple[int, ...], reduction: int = 8):
+#         super().__init__()
+#         self.nl = len(ch)
+#         c = ch[0]
+#         # align every scale to the P3 channel width
+#         self.align = nn.ModuleList(Conv(ci, c, 1) for ci in ch)
+#         # channel attention (per scale, per channel)
+#         hidden = max(c // reduction, 8)
+#         self.fc = nn.Sequential(
+#             nn.Linear(c, hidden, bias=False),
+#             nn.ReLU(inplace=True),
+#             nn.Linear(hidden, c, bias=False),
+#         )
+#         self.fuse = Conv(c, c, 3)
+#         # per-scale refinement after redistributing the fused map
+#         self.refine = nn.ModuleList(Conv(c, c, 3) for _ in ch)
+#
+#     def forward(self, x: list[torch.Tensor]) -> list[torch.Tensor]:
+#         feats = [a(xi) for a, xi in zip(self.align, x)]
+#         sizes = [f.shape[-2:] for f in feats]
+#         target = sizes[0]
+#
+#         # bring all scales to P3 resolution
+#         ups = [f if f.shape[-2:] == target else F.interpolate(f, size=target, mode="nearest") for f in feats]
+#         stacked = torch.stack(ups, dim=1)                      # (B, N, C, H, W)
+#         B, N, C, H, W = stacked.shape
+#
+#         # channel descriptor per scale -> softmax across scales (competition between scales)
+#         pooled = stacked.mean(dim=(-2, -1))                    # (B, N, C)
+#         attn = self.fc(pooled).softmax(dim=1).view(B, N, C, 1, 1)
+#         fused = self.fuse((stacked * attn).sum(dim=1))         # (B, C, H, W)
+#
+#         # redistribute to each original resolution + residual
+#         outs = []
+#         for i, f in enumerate(feats):
+#             if fused.shape[-2:] == sizes[i]:
+#                 r = fused
+#             else:
+#                 r = F.adaptive_avg_pool2d(fused, sizes[i])     # downsample (avoids nearest aliasing)
+#             outs.append(f + self.refine[i](r))
+#         return outs                                            # [P3', P4', P5'], all C channels                                 # [P3', P4', P5'], all C channels
+####################################
 class ACMF(nn.Module):
-    """Adaptive Channel Multi-Scale Fusion: cross-scale channel attention, returns a pyramid."""
-
     def __init__(self, ch: tuple[int, ...], reduction: int = 8):
         super().__init__()
         self.nl = len(ch)
         c = ch[0]
-        # align every scale to the P3 channel width
         self.align = nn.ModuleList(Conv(ci, c, 1) for ci in ch)
-        # channel attention (per scale, per channel)
         hidden = max(c // reduction, 8)
         self.fc = nn.Sequential(
-            nn.Linear(c, hidden, bias=False),
-            nn.ReLU(inplace=True),
-            nn.Linear(hidden, c, bias=False),
+            nn.Linear(c, hidden, bias=False), nn.ReLU(inplace=True), nn.Linear(hidden, c, bias=False)
         )
+        self.spatial = nn.Conv2d(c * self.nl, self.nl, 1)       # per-pixel scale logits
         self.fuse = Conv(c, c, 3)
-        # per-scale refinement after redistributing the fused map
         self.refine = nn.ModuleList(Conv(c, c, 3) for _ in ch)
+        self.proj = nn.ModuleList(Conv(c, ci, 1, act=False) for ci in ch)  # back to ORIGINAL widths
+        self.gamma = nn.Parameter(torch.zeros(self.nl))          # zero-init: starts as identity
 
-    def forward(self, x: list[torch.Tensor]) -> list[torch.Tensor]:
+    def forward(self, x):
         feats = [a(xi) for a, xi in zip(self.align, x)]
-        sizes = [f.shape[-2:] for f in feats]
-        target = sizes[0]
-
-        # bring all scales to P3 resolution
-        ups = [f if f.shape[-2:] == target else F.interpolate(f, size=target, mode="nearest") for f in feats]
-        stacked = torch.stack(ups, dim=1)                      # (B, N, C, H, W)
+        sizes = [xi.shape[-2:] for xi in x]
+        ups = [f if f.shape[-2:] == sizes[0]
+               else F.interpolate(f, size=sizes[0], mode="bilinear", align_corners=False) for f in feats]
+        stacked = torch.stack(ups, 1)                            # (B, N, C, H, W)
         B, N, C, H, W = stacked.shape
 
-        # channel descriptor per scale -> softmax across scales (competition between scales)
-        pooled = stacked.mean(dim=(-2, -1))                    # (B, N, C)
-        attn = self.fc(pooled).softmax(dim=1).view(B, N, C, 1, 1)
-        fused = self.fuse((stacked * attn).sum(dim=1))         # (B, C, H, W)
+        desc = stacked.mean((-2, -1)) + stacked.amax((-2, -1))   # avg + max descriptor, (B, N, C)
+        chan = self.fc(desc).view(B, N, C, 1, 1)
+        spat = self.spatial(torch.cat(ups, 1)).unsqueeze(2)      # (B, N, 1, H, W)
+        attn = (chan + spat).softmax(dim=1)                      # scale competition per channel AND pixel
+        fused = self.fuse((stacked * attn).sum(1))
 
-        # redistribute to each original resolution + residual
         outs = []
-        for i, f in enumerate(feats):
-            if fused.shape[-2:] == sizes[i]:
+        for i, xi in enumerate(x):
+            if sizes[i] == sizes[0]:
                 r = fused
             else:
-                r = F.adaptive_avg_pool2d(fused, sizes[i])     # downsample (avoids nearest aliasing)
-            outs.append(f + self.refine[i](r))
-        return outs                                            # [P3', P4', P5'], all C channels
+                r = 0.5 * (F.adaptive_avg_pool2d(fused, sizes[i]) + F.adaptive_max_pool2d(fused, sizes[i]))
+            outs.append(xi + self.gamma[i] * self.proj[i](self.refine[i](r)))   # identity + gated residual
+        return outs                                              # same channels as the input [256, 512, 512]
