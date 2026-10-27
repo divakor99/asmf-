@@ -117,7 +117,6 @@ The Segment Anything Model can be employed for a multitude of downstream tasks t
 
         ```python
         import cv2
-
         from ultralytics.models.sam import Predictor as SAMPredictor
 
         # Create SAMPredictor

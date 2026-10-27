@@ -66,7 +66,6 @@ The `SpeedEstimator` solution tracks each object across frames and converts its 
 
         ```python
         import cv2
-
         from ultralytics import solutions
 
         cap = cv2.VideoCapture("path/to/video.mp4")

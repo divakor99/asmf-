@@ -4,7 +4,6 @@
 
 import torch
 from torch import nn
-
 from ultralytics.nn.modules.utils import _get_clones
 from ultralytics.utils.ops import xywh2xyxy
 

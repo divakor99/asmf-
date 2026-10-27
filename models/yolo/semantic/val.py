@@ -11,7 +11,6 @@ import torch
 import torch.distributed as dist
 import torch.nn.functional as F
 from PIL import Image
-
 from ultralytics.data.dataset import SemanticDataset
 from ultralytics.models.yolo.detect import DetectionValidator
 from ultralytics.utils import LOGGER, RANK, ops

@@ -1,13 +1,13 @@
 # Ultralytics 🚀 AGPL-3.0 License - https://ultralytics.com/license
 
 import pytest
-
-from tests import SOURCE
-from tests.conftest import isolated_model_path
 from ultralytics import YOLO
 from ultralytics.cfg import TASK2MODEL, TASKS
 from ultralytics.utils import WEIGHTS_DIR
 from ultralytics.utils.checks import rocm_is_available
+
+from tests import SOURCE
+from tests.conftest import isolated_model_path
 
 ROCM_IS_AVAILABLE = rocm_is_available()
 

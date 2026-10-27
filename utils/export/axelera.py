@@ -13,7 +13,6 @@ from typing import Any
 
 import numpy as np
 import torch
-
 from ultralytics.utils import LOGGER, YAML
 from ultralytics.utils.checks import check_requirements
 

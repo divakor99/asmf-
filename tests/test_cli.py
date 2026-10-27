@@ -8,10 +8,10 @@ from pathlib import Path
 
 import pytest
 from PIL import Image
-
-from tests import CUDA_DEVICE_COUNT, CUDA_IS_AVAILABLE, MODELS, TASK_MODEL_DATA
 from ultralytics.utils import ARM64, ASSETS, DATASETS_DIR, IS_RASPBERRYPI, LINUX, WEIGHTS_DIR, checks
 from ultralytics.utils.torch_utils import TORCH_1_11, TORCH_VERSION
+
+from tests import CUDA_DEVICE_COUNT, CUDA_IS_AVAILABLE, MODELS, TASK_MODEL_DATA
 
 
 def run(cmd: str) -> None:
@@ -163,7 +163,6 @@ def test_fastsam(
 def test_mobilesam() -> None:
     """Test MobileSAM segmentation with point and box prompts using Ultralytics."""
     import numpy as np
-
     from ultralytics import SAM
 
     # Load the model

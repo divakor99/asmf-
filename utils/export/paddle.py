@@ -5,7 +5,6 @@ from __future__ import annotations
 from pathlib import Path
 
 import torch
-
 from ultralytics.utils import ARM64, IS_JETSON, LOGGER, YAML
 
 

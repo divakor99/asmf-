@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import torch
-
 from ultralytics.engine.results import Results
 from ultralytics.models.yolo.detect.predict import DetectionPredictor
 from ultralytics.utils import DEFAULT_CFG, ops

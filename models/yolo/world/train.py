@@ -7,7 +7,6 @@ from pathlib import Path
 from typing import Any
 
 import torch
-
 from ultralytics.data import build_yolo_dataset
 from ultralytics.engine.trainer import BaseTrainer
 from ultralytics.models.yolo.detect import DetectionTrainer

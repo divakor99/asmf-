@@ -419,7 +419,6 @@ This allows direct inspection of backbone outputs:
 
 ```python
 import torch
-
 from ultralytics import YOLO
 
 model = YOLO("debug_model.yaml", task="detect")

@@ -46,7 +46,6 @@ from pathlib import Path
 
 import numpy as np
 import torch.cuda
-
 from ultralytics import RTDETR, YOLO, YOLOE, YOLOWorld
 from ultralytics.cfg import TASK2DATA, TASK2METRIC
 from ultralytics.data.utils import check_det_dataset, convert_ndjson_to_yolo_if_needed
@@ -520,7 +519,6 @@ class ProfileModels:
             (tuple[float, float]): Mean and standard deviation of inference time in milliseconds.
         """
         import onnxruntime as ort
-
         from ultralytics.nn.backends import ONNXBackend
 
         # Session options for consistent benchmarking

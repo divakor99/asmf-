@@ -8,7 +8,6 @@ from typing import Any
 import numpy as np
 import torch
 import torch.nn.functional as F
-
 from ultralytics.engine.predictor import BasePredictor
 from ultralytics.engine.results import Results
 from ultralytics.utils import DEFAULT_CFG, ops

@@ -10,7 +10,6 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 from torch import Tensor, nn
-
 from ultralytics.nn.modules import MLP, LayerNorm2d, MLPBlock
 
 from .transformer import Attention, TwoWayAttentionBlock, TwoWayTransformer

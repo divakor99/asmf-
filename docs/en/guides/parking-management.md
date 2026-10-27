@@ -77,7 +77,6 @@ A parking management system built with [Ultralytics YOLO26](https://github.com/u
 
         ```python
         import cv2
-
         from ultralytics import solutions
 
         # Video capture

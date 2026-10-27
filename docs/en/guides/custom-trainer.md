@@ -49,7 +49,6 @@ The [validation](../modes/val.md) step computes [precision](https://www.ultralyt
 
 ```python
 import numpy as np
-
 from ultralytics import YOLO
 from ultralytics.models.yolo.detect import DetectionTrainer
 from ultralytics.utils import LOGGER
@@ -106,7 +105,6 @@ Set `cls_pw` between `0.0` and `1.0` to apply normalized inverse-frequency weigh
 
 ```python
 import numpy as np
-
 from ultralytics import YOLO
 from ultralytics.models.yolo.detect import DetectionTrainer
 
@@ -275,7 +273,6 @@ The conversion has to happen after the model is on the GPU but before DDP wraps 
 
 ```python
 from torch import nn
-
 from ultralytics import RTDETR
 from ultralytics.models.rtdetr.train import RTDETRTrainer
 
@@ -310,7 +307,6 @@ The default trainer clips gradients to `max_norm=10.0` in `optimizer_step()`, a 
 
 ```python
 import torch
-
 from ultralytics import RTDETR
 from ultralytics.models.rtdetr.train import RTDETRTrainer
 from ultralytics.utils.torch_utils import TORCH_2_0

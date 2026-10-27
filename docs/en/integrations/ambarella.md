@@ -184,7 +184,6 @@ ONNX export embeds the model task, class names, stride, and input size in the ON
 
 ```python
 import onnx
-
 from ultralytics.utils import YAML
 
 model = onnx.load("model.onnx")

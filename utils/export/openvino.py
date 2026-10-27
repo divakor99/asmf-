@@ -6,7 +6,6 @@ from pathlib import Path
 from typing import Any
 
 import torch
-
 from ultralytics.utils import LOGGER
 
 
@@ -48,7 +47,6 @@ def torch2openvino(
     ov_model = ov.convert_model(ts, input=None if dynamic else input_shape, example_input=im)
     if quantize == 8:
         import nncf
-
         from ultralytics.nn.modules import RTDETRDecoder
 
         ignored_scope = None

@@ -11,7 +11,6 @@ from typing import Any
 
 import numpy as np
 import torch
-
 from ultralytics.utils import LOGGER, DataExportMixin, SimpleClass, TryExcept, checks, plt_settings
 from ultralytics.utils.plotting import colors
 

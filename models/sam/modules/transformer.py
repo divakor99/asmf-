@@ -6,7 +6,6 @@ import math
 
 import torch
 from torch import Tensor, nn
-
 from ultralytics.nn.modules import MLPBlock
 
 

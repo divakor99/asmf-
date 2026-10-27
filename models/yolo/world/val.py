@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import torch
-
 from ultralytics.data.utils import check_det_dataset, convert_ndjson_to_yolo_if_needed
 from ultralytics.models.yolo.detect import DetectionValidator
 from ultralytics.utils.torch_utils import select_device

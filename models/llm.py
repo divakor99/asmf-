@@ -9,7 +9,6 @@ from typing import Any
 import cv2
 import numpy as np
 from PIL import Image
-
 from ultralytics.utils.checks import check_requirements
 
 

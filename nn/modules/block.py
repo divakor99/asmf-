@@ -8,13 +8,13 @@ import math
 import torch
 import torch.nn.functional as F
 from torch import nn
-
 from ultralytics.utils.torch_utils import fuse_conv_and_bn
 
 from .conv import Conv, DWConv, GhostConv, LightConv, RepConv, autopad
 from .transformer import TransformerBlock
 
 __all__ = (
+    "ACMF",
     "C1",
     "C2",
     "C2PSA",
@@ -54,7 +54,6 @@ __all__ = (
     "ResNetLayer",
     "SCDown",
     "TorchVision",
-    "ACMF",
 )
 
 
@@ -2114,7 +2113,10 @@ class RealNVP(nn.Module):
         z, log_det = self.backward_p(x)
         # Closed-form log N(z; 0, I) in 2-D; fp32 keeps z**2 from overflowing under AMP.
         return -0.5 * (z.float() ** 2).sum(-1) - math.log(2 * math.pi) + log_det
+
+
 # Add this class to ultralytics/nn/modules/block.py
+
 
 class ACMF(nn.Module):
     """Adaptive Channel Multi-Scale Fusion: cross-scale channel attention, returns a pyramid."""
@@ -2143,13 +2145,13 @@ class ACMF(nn.Module):
 
         # bring all scales to P3 resolution
         ups = [f if f.shape[-2:] == target else F.interpolate(f, size=target, mode="nearest") for f in feats]
-        stacked = torch.stack(ups, dim=1)                      # (B, N, C, H, W)
-        B, N, C, H, W = stacked.shape
+        stacked = torch.stack(ups, dim=1)  # (B, N, C, H, W)
+        B, N, C, _H, _W = stacked.shape
 
         # channel descriptor per scale -> softmax across scales (competition between scales)
-        pooled = stacked.mean(dim=(-2, -1))                    # (B, N, C)
+        pooled = stacked.mean(dim=(-2, -1))  # (B, N, C)
         attn = self.fc(pooled).softmax(dim=1).view(B, N, C, 1, 1)
-        fused = self.fuse((stacked * attn).sum(dim=1))         # (B, C, H, W)
+        fused = self.fuse((stacked * attn).sum(dim=1))  # (B, C, H, W)
 
         # redistribute to each original resolution + residual
         outs = []
@@ -2157,6 +2159,6 @@ class ACMF(nn.Module):
             if fused.shape[-2:] == sizes[i]:
                 r = fused
             else:
-                r = F.adaptive_avg_pool2d(fused, sizes[i])     # downsample (avoids nearest aliasing)
+                r = F.adaptive_avg_pool2d(fused, sizes[i])  # downsample (avoids nearest aliasing)
             outs.append(f + self.refine[i](r))
-        return outs                                            # [P3', P4', P5'], all C channels
+        return outs  # [P3', P4', P5'], all C channels

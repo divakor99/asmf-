@@ -7,7 +7,6 @@ from typing import Any
 
 import numpy as np
 import torch
-
 from ultralytics.models.yolo.detect import DetectionValidator
 from ultralytics.utils import ops
 from ultralytics.utils.metrics import OKS_SIGMA, PoseMetrics, kpt_iou

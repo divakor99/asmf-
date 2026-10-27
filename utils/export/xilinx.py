@@ -44,7 +44,6 @@ def onnx2xilinx(
     # Quark imports onnxruntime but only declares it in its cli extra
     check_requirements(["amd-quark>=0.13.0,<0.14.0", ("onnxruntime", "onnxruntime-gpu", "onnxruntime-vitisai")])
     import onnx
-
     from ultralytics.utils.export.onnx import onnx_calibration_reader
 
     onnx_file, output_dir = Path(onnx_file), Path(output_dir)

@@ -13,9 +13,9 @@ from pathlib import Path
 import numpy as np
 import torch
 from torch import nn
-
 from ultralytics.nn.autobackend import check_class_names
 from ultralytics.nn.modules import (
+    ACMF,
     AIFI,
     C1,
     C2,
@@ -78,7 +78,6 @@ from ultralytics.nn.modules import (
     YOLOESegment,
     YOLOESegment26,
     v10Detect,
-    ACMF,
 )
 from ultralytics.utils import (
     DEFAULT_CFG_DICT,
@@ -1766,7 +1765,6 @@ class _SafeLoad:
                     cls._registry[f"{obj.__module__}.{obj.__qualname__}"] = obj
             if "ultralytics.nn.text_model.CLIP" in needed:
                 import clip
-
                 from ultralytics.nn.text_model import CLIP
 
                 for obj in (

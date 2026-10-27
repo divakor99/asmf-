@@ -12,7 +12,6 @@ from pathlib import Path
 import yaml
 from build_reference import build_reference_docs
 from minijinja import Environment, load_from_path
-
 from ultralytics.utils import LOGGER
 from ultralytics.utils.tqdm import TQDM
 

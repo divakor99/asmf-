@@ -12,7 +12,6 @@ from __future__ import annotations
 
 import numpy as np
 import torch
-
 from ultralytics.nn.autobackend import AutoBackend
 from ultralytics.utils.ops import xywh2xyxy
 from ultralytics.utils.plotting import save_one_box

@@ -40,7 +40,6 @@ The `SecurityAlarm` solution tracks objects in your video feed and sends a singl
 
         ```python
         import cv2
-
         from ultralytics import solutions
 
         cap = cv2.VideoCapture("path/to/video.mp4")

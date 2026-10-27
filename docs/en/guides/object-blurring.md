@@ -53,7 +53,6 @@ Pass your video to the `ObjectBlurrer` solution and it detects objects each fram
 
         ```python
         import cv2
-
         from ultralytics import solutions
 
         cap = cv2.VideoCapture("path/to/video.mp4")

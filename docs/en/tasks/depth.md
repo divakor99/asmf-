@@ -441,7 +441,6 @@ The raw depth map is a single-channel float array in meters — useful for compu
 
         ```python
         import cv2
-
         from ultralytics import YOLO
         from ultralytics.utils.plotting import colorize_depth
 

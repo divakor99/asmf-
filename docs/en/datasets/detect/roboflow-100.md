@@ -59,7 +59,6 @@ Dataset [benchmarking](../../modes/benchmark.md) involves evaluating the perform
         from pathlib import Path
 
         from roboflow import Roboflow
-
         from ultralytics import YOLO
         from ultralytics.utils import ASSETS_URL, LOGGER, YAML
         from ultralytics.utils.downloads import safe_download

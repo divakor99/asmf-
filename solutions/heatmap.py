@@ -7,7 +7,6 @@ from typing import Any
 import cv2
 import numpy as np
 import torch
-
 from ultralytics.solutions.object_counter import ObjectCounter
 from ultralytics.solutions.solutions import SolutionAnnotator, SolutionResults
 

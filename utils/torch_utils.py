@@ -21,7 +21,6 @@ import torch.nn.functional as F
 from torch import nn
 from torch.nn.utils.fusion import fuse_conv_bn_weights
 from torch.utils._pytree import tree_flatten
-
 from ultralytics import __version__
 from ultralytics.utils import (
     ARM64,
